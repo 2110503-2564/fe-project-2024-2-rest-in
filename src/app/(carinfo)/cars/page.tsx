@@ -1,4 +1,3 @@
-import CardPanel from "@/components/CardPanel"
 import getCarProviders from "@/libs/getCarProviders"
 import VenueCatalog from "@/components/VenueCatalog"
 import { Suspense } from "react"

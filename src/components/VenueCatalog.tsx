@@ -6,9 +6,9 @@ export default async function VenueCatalog({CarProviderJson}: {CarProviderJson: 
   return (
     <>
     <div className="text-center text-xl">Explore {CarProviderJsonReady.count} models in our catalog</div>
-      <div className="m-5 flex flex-row content-around, justify-around flex-wrap">
+      <div className="m-4 flex flex-row content-around, justify-around flex-wrap">
         {CarProviderJsonReady.data.map((data:CarProvider) => (
-          <Link href={`/cars/${data.id}`} className="w-1/5">
+          <Link href={`/cars/${data.id}`} className="w-[250px] flex ">
             <Card
               key={data.name}
               carName={data.name}
