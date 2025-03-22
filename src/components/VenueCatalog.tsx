@@ -11,7 +11,7 @@ export default async function VenueCatalog({CarProviderJson}: {CarProviderJson: 
           <Link href={`/cars/${data.id}`} className="w-1/5">
             <Card
               key={data.name}
-              venueName={data.name}
+              carName={data.name}
               imgSrc={data.picture}
             />
           </Link>
