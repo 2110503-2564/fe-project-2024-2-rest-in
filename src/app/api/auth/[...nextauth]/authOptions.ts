@@ -49,5 +49,6 @@ export const authOptions:AuthOptions = {
     },
     pages: {
     signIn: "/login", // ให้ NextAuth ใช้หน้า login ที่เราสร้างเอง
+    signOut: "/logout",
   },
 }

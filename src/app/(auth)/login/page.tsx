@@ -26,6 +26,7 @@ export default function LoginPage() {
       if (res?.error) {
         setError("Invalid email or password");
       } else {
+        router.refresh();
         router.push("/mybooking");
       }
     } finally {
