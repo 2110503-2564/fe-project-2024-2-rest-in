@@ -22,7 +22,7 @@ export default function InteractiveCard({ children }: { children: ReactNode }) {
 
     return (
         <div
-            className={'w-full h-[300px] rounded-lg shadow-lg bg-white'}
+            className={'w-full h-[300px] rounded-lg shadow-lg bg-white m-4'}
             onMouseOver={(e) => onCardMouseAction(e)}
             onMouseOut={(e) => onCardMouseAction(e)}
         >

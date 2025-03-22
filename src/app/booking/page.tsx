@@ -33,7 +33,7 @@ export default function Booking() {
 
     const makeBooking = () => {
         if (name && contactNumber && venue && bookingDate) {
-            const item: BookingItem = {
+            const item: BookingData = {
                 nameLastname: name,
                 tel: contactNumber,
                 venue: venue,
