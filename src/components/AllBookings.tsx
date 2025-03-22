@@ -58,6 +58,17 @@ const AllBookings = () => {
               <p className="text-gray-700"><strong>Phone:</strong> {booking.carProvider.tel}</p>
               <p className="text-gray-700"><strong>Created At:</strong> {new Date(booking.createdAt).toLocaleDateString()}</p>
             </div>
+            <button className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md 
+              hover:bg-red-600 hover:shadow-lg transition duration-300 ease-in-out my-3 mx-1">
+              Remove
+            </button>
+            <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md 
+              hover:bg-blue-600 hover:shadow-lg focus:ring-2 focus:ring-blue-300 
+              transition duration-300 ease-in-out my-3 mx-1">
+              Edit
+            </button>
+
+
           </div>
         ))
       )}
