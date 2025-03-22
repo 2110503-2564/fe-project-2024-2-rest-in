@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { getBookings } from "@/libs/getBookings";  // นำเข้าฟังก์ชัน getBookings จาก libs
 
 const AllBookings = () => {
+
+  const { data: session } = useSession();
+  const token = session?.user?.token;
+
   const [bookings, setBookings] = useState<BookingData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-  // ดึง token จาก localStorage หรือจากที่อื่น
-    const token = localStorage.getItem("token");
-
-  // สำหรับการทดสอบโดยตรง  
-  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzZhYjA0MmFmOTQ4ZDM1OWM0OWFlMyIsImlhdCI6MTc0MjYzNjU1NiwiZXhwIjoxNzQ1MjI4NTU2fQ.zAfTt084d60RPPOq7wCHfiPLhLDfY7VbDpDSPOZMThk";
 
   useEffect(() => {
     const fetchBookings = async () => {
