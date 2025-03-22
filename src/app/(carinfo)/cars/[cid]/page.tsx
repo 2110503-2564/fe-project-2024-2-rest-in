@@ -1,5 +1,5 @@
 import Image from "next/image"
-import getVenue from "@/libs/getVenue"
+import getVenue from "@/libs/getCarProvider"
 import Link from "next/link"
 
 export default async function VenueDetailPage({params} : {params:{cid:string}}){
