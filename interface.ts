@@ -25,3 +25,30 @@ interface VenueItem {
     venue: string;
     bookDate: string;
   }
+  
+  // new interface
+
+  interface CarProvider {
+    _id: string;
+    name: string;
+    address: string;
+    tel: string;
+    id: string;
+  }
+  
+  interface BookingData {
+    _id: string;
+    startDate: string;
+    endDate: string;
+    user: string;
+    carProvider: CarProvider;
+    createdAt: string;
+    __v: number;
+  }
+  
+  interface BookingResponse {
+    success: boolean;
+    count: number;
+    data: BookingData[];
+  }
+  

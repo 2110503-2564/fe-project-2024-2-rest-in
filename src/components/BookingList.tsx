@@ -11,7 +11,7 @@ export default function BookingList(){
     if (bookItems.length === 0) {
         return (
             <div className="text-center text-lg text-gray-600">
-                No Venue Booking
+                No Car Booking
             </div>
         )
     }
