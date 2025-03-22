@@ -7,10 +7,10 @@ const AllBookings = () => {
   const [error, setError] = useState<string | null>(null);
 
   // ดึง token จาก localStorage หรือจากที่อื่น
-    const token = localStorage.getItem("token");
-    
+    //const token = localStorage.getItem("token");
+
   // สำหรับการทดสอบโดยตรง  
-  //const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzQ1ZDk4NmM4MWM0Mjc3MzY1MjYxZiIsImlhdCI6MTc0MjYzMjcxNiwiZXhwIjoxNzQ1MjI0NzE2fQ.xxAevAzC5nOBGkDFusZn-d3BQMo0j81itOqh9nZPYl8";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzZhYjA0MmFmOTQ4ZDM1OWM0OWFlMyIsImlhdCI6MTc0MjYzNjU1NiwiZXhwIjoxNzQ1MjI4NTU2fQ.zAfTt084d60RPPOq7wCHfiPLhLDfY7VbDpDSPOZMThk";
 
   useEffect(() => {
     const fetchBookings = async () => {
