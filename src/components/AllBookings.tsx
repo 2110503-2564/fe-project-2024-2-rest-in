@@ -1,21 +1,27 @@
 "use client"
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { getBookings } from "@/libs/getBookings";  // นำเข้าฟังก์ชัน getBookings จาก libs
-import { useDispatch, UseDispatch } from "react-redux"
-import { AppDispatch, useAppSelector } from "@/redux/store"
+import { getBookings } from "@/libs/getBookings";
 import { deleteBookings } from "@/libs/deleteBooking";
+import { DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { updateBooking } from "@/libs/updateBooking";
+import { now } from "next-auth/client/_utils";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs"; // Import dayjs for formatting
 
 const AllBookings = () => {
-
   const { data: session } = useSession();
   const token = session?.user?.token;
 
   const [bookings, setBookings] = useState<BookingData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<BookingData | null>(null); // Selected for editing
 
-  const dispatch = useDispatch<AppDispatch>();
+  // Form state
+  const [updatedStartDate, setUpdatedStartDate] = useState<string>("");
+  const [updatedEndDate, setUpdatedEndDate] = useState<string>("");
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -26,10 +32,9 @@ const AllBookings = () => {
       }
 
       try {
-        console.log("Token:", token);
-        const data = await getBookings(token); // ใช้ getBookings ที่ส่ง token
-        setBookings(data.data); // เก็บข้อมูลการจอง
-        setLoading(false); // การโหลดเสร็จสมบูรณ์
+        const data = await getBookings(token); // Fetch bookings with token
+        setBookings(data.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching bookings:", error);
         setError("Failed to fetch bookings");
@@ -48,9 +53,37 @@ const AllBookings = () => {
     return <div>{error}</div>;
   }
 
-  if(!token){
-    return <div>No Token</div>
+  if (!token) {
+    return <div>No Token</div>;
   }
+
+  const handleUpdate = async () => {
+    if (!selectedBooking || !updatedStartDate || !updatedEndDate) return;
+
+    try {
+      await updateBooking(token, selectedBooking._id, {
+        //startDate: updatedStartDate,
+        endDate: updatedEndDate,
+        createAt: new Date(now()), // Add creation time as a new date
+      });
+
+      setBookings(bookings.map((b) =>
+        b._id === selectedBooking._id
+          ? {
+              ...b,
+              startDate: updatedStartDate,
+              endDate: updatedEndDate,
+              createdAt: new Date(now()).toISOString(),
+            }
+          : b
+      ));
+
+      setSelectedBooking(null); // Close modal after update
+
+    } catch (error) {
+      console.error("Error updating booking:", error);
+    }
+  };
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -68,27 +101,75 @@ const AllBookings = () => {
               <p className="text-gray-700"><strong>Phone:</strong> {booking.carProvider.tel}</p>
               <p className="text-gray-700"><strong>Created At:</strong> {new Date(booking.createdAt).toLocaleDateString()}</p>
             </div>
-            <button className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md 
-              hover:bg-red-600 hover:shadow-lg transition duration-300 ease-in-out my-3 mx-1"
+            <button className="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 hover:shadow-lg transition duration-300 ease-in-out my-3 mx-1"
               onClick={async () => {
                 await deleteBookings(token, booking._id); // Call API
                 setBookings(bookings.filter((b) => b._id !== booking._id)); // Remove from UI
               }}>
               Remove
             </button>
-            <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md 
-              hover:bg-blue-600 hover:shadow-lg focus:ring-2 focus:ring-blue-300 
-              transition duration-300 ease-in-out my-3 mx-1">
+            <button className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-600 hover:shadow-lg focus:ring-2 focus:ring-blue-300 transition duration-300 ease-in-out my-3 mx-1"
+              onClick={() => {
+                setSelectedBooking(booking);
+                setUpdatedStartDate(booking.startDate);
+                setUpdatedEndDate(booking.endDate);
+              }}>
               Edit
             </button>
-
-
           </div>
         ))
       )}
+
+      {selectedBooking && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-2xl font-semibold mb-4">Edit Booking</h2>
+  
+            {/* Start Date */}
+            <label className="block mb-2 text-black">New Start Date:</label>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker 
+                className="bg-white" 
+                label="Start Date"
+                value={dayjs(updatedStartDate)} // Convert string date to Dayjs
+                onChange={(value) => {
+                  setUpdatedStartDate(value?.toISOString() || ""); // Convert to ISO string
+                }}
+              />
+            </LocalizationProvider>
+
+            {/* End Date */}
+            <label className="block mb-2 text-black">New End Date:</label>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker 
+                className="bg-white" 
+                label="End Date"
+                value={dayjs(updatedEndDate)} // Convert string date to Dayjs
+                onChange={(value) => {
+                  setUpdatedEndDate(value?.toISOString() || ""); // Convert to ISO string
+                }}
+              />
+            </LocalizationProvider>
+
+            <div className="flex justify-end mt-4">
+              <button 
+                className="px-4 py-2 bg-green-500 text-white rounded-lg mr-2"
+                onClick={handleUpdate}
+              >
+                Save
+              </button>
+              <button 
+                className="px-4 py-2 bg-gray-500 text-white rounded-lg"
+                onClick={() => setSelectedBooking(null)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-  
 };
 
 export default AllBookings;
