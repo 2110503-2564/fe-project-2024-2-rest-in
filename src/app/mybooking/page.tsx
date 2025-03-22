@@ -6,7 +6,7 @@ import AllBookings from "@/components/AllBookings"
 export default function CartPage(){
     return (
         <main>
-            <BookingList></BookingList>
+            {/* <BookingList></BookingList> */}
             <AllBookings></AllBookings>
         </main>
     )

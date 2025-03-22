@@ -1,12 +1,20 @@
+import { promises } from "dns";
+
 // libs/getBookings.js
-export const getBookings = async (token:string) => {
+export const deleteBookings = async (token:string,bid:string,updateBook:BookingData) => {
     
-    const response = await fetch('https://fe-project-2024-2-rest-in-api.vercel.app/api/v1/bookings', {
+    const response = await fetch(`https://fe-project-2024-2-rest-in-api.vercel.app/api/v1/bookings/${bid}`, {
         
-        method: 'GET',
+        method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${token}`,  // ส่ง Token ใน Header
-        }
+        },
+        body: JSON.stringify({
+            startDate: updateBook.startDate,
+            endDate: updateBook.endDate,
+            carProvider: updateBook.carProvider,
+            createdAt: updateBook.createdAt,
+        }),
     });
 
     if (!response.ok) {
@@ -16,7 +24,7 @@ export const getBookings = async (token:string) => {
             localStorage.removeItem('token');  // ลบ token จาก localStorage
             return; // อาจให้ผู้ใช้ล็อกอินใหม่
         }
-        throw new Error('Error fetching bookings');
+        throw new Error(`Error Delete booking ${bid}`);
     }
 
     const data = await response.json();
