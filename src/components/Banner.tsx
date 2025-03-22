@@ -22,8 +22,8 @@ export default function Banner() {
             priority={true}
             style={{ objectFit: 'cover' }} />
             <div className={styles.bannerText}>
-                <h1 className='text-4xl font-medium text-white'>where every event finds its venue</h1>
-                <h3 className='text-xl font-serif text-white'>Find the cool event venues you're looking for here.</h3>
+                <h1 className='text-4xl font-medium text-white'>where every moment finds its car</h1>
+                <h3 className='text-xl font-serif text-white'>Find the cool car you're looking for here.</h3>
             </div>
             {
                 session? <div className="z-30 absolute top-5 right-10 font-semibold text-cyan-800 text-xl">
@@ -31,9 +31,9 @@ export default function Banner() {
                 : null
             }
             <Link href="/cars" prefetch={true}>
-            <button className="bg-white text-cyan-600 border border-cyan-600 
-            font-semibold py-2 px-2 m-2 rounded z-30 absolute bottom-0 right-0
-            hover:bg-cyan-600 hover:text-white hover:border-transparent">
+            <button className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border-none 
+            font-bold py-3 px-4 m-4 rounded-md z-30 absolute bottom-4 right-4
+            shadow-lg transform transition-transform duration-300 hover:scale-105">
                 View Products
             </button>
             </Link>
