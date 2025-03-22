@@ -11,15 +11,10 @@ export default function Card({carName, imgSrc, onRating}:{carName:string, imgSrc
         <InteractiveCard>
             <div className='w-full h-[70%] relative rounded-t-lg'>
                 <Image 
-                // imgSrc should be a direct image URL or a path from the public folder
-                // Example: "/images/car1.jpg" for images in public/images folder
                 src={imgSrc}
                 alt={carName}
                 fill={true}
                 className='object-cover rounded-t-lg'
-                onError={(e) => {
-                    console.error(`Failed to load image: ${imgSrc}`);
-                }}
                 />
             </div>
             <div className='w-full h-[30%] p-2 text-center text-lg font-semibold text-black flex flex-col justify-center items-center'>
