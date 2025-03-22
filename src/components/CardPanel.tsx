@@ -44,7 +44,7 @@ export default function CardPanel() {
             <div>
                 <div className="m-5 flex flex-row content-around, justify-around flex-wrap">
                     {mockVenueRepo.map((venueItem) => (
-                        <Link href={`/venue/${venueItem.vid}`} className="w-1/5">
+                        <Link href={`/venue/${venueItem.vid}`} prefetch={true} className="w-1/5">
                             <Card 
                                 key={venueItem.name}
                                 venueName={venueItem.name}

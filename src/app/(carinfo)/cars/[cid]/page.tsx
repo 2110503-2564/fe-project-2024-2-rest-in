@@ -2,9 +2,9 @@ import Image from "next/image"
 import getVenue from "@/libs/getVenue"
 import Link from "next/link"
 
-export default async function VenueDetailPage({params} : {params:{vid:string}}){
+export default async function VenueDetailPage({params} : {params:{cid:string}}){
     
-    const venueDetail = await getVenue(params.vid)
+    const venueDetail = await getVenue(params.cid)
     //mock data
     // const mockVenueRepo = new Map()
     // mockVenueRepo.set("001",{name: "The Bloom Pavilion", image: "/img/bloom.jpg"})
@@ -27,7 +27,7 @@ export default async function VenueDetailPage({params} : {params:{vid:string}}){
                     <div>Daily Rate: {(venueDetail.data.dailyrate)}</div>
                 </div>
 
-                {/* <Link href={`/booking?id=${params.vid}&model=${venueDetail.data.model}`}>
+                {/* <Link href={`/booking?id=${params.cid}&model=${venueDetail.data.model}`}>
                 <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2
                 text-white shadow-sm">
                     Make Booking
@@ -39,5 +39,5 @@ export default async function VenueDetailPage({params} : {params:{vid:string}}){
 }
 
 // export async function generateStaticParams() {
-//     return [{vid:'001'}, {vid:'002'}, {vid:'003'}]
+//     return [{cid:'001'}, {cid:'002'}, {cid:'003'}]
 // }

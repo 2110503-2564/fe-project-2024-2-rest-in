@@ -33,7 +33,11 @@ export const authOptions:AuthOptions = {
             }
           })
     ],
-    session: {strategy: "jwt"},
+    session: {
+      strategy: "jwt",
+      maxAge: 30 * 24 * 60 * 60, // 30 days
+      updateAge: 24 * 60 * 60, // 24 hours
+    },
     callbacks: {
       async jwt({token, user}) {
           return {...token, ...user}
@@ -42,5 +46,8 @@ export const authOptions:AuthOptions = {
           session.user = token as any
           return session
       }
-  }
+    },
+    pages: {
+    signIn: "/login", // ให้ NextAuth ใช้หน้า login ที่เราสร้างเอง
+  },
 }
