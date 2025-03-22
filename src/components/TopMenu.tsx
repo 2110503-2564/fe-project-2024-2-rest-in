@@ -17,21 +17,21 @@ export default function TopMenu() {
                 width={0} height={0} sizes='100vh' 
             />
             </Link>
-            <div className="flex items-center space-x-4 absolute left-0 h-full px-2">
+            <div className="flex items-center space-x-4 absolute right-0 h-full px-8">
                 {session ? (
                     <>
-                        <Link href="/api/auth/signout" prefetch={true} className="text-cyan-600 text-sm">
-                            Sign-Out of {session.user?.name}
-                        </Link>
                         <Link href='/booking' prefetch={true} className={styles.itemcontainer}>
                             Booking
                         </Link>
                         <Link href='/mybooking' prefetch={true} className={styles.itemcontainer}>
                             My Booking
                         </Link>
+                        <Link href="/api/auth/signout" prefetch={true} className={styles.itemcontainer + "w-auto text-cyan-600 text-md"}>
+                            Sign-Out of {session.user?.name}
+                        </Link>
                     </>
                 ) : (
-                    <Link href="/api/auth/signin" prefetch={true} className="text-cyan-600 text-sm">
+                    <Link href="/api/auth/signin" prefetch={true} className={styles.itemcontainer + "w-auto text-cyan-600 text-md"}>
                         Sign-In
                     </Link>
                 )}

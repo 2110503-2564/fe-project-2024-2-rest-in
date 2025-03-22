@@ -10,7 +10,9 @@
     border-bottom: 1px solid lightgray;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .logoimg {
@@ -19,10 +21,15 @@
 }
 
 .itemcontainer {
-    width: 120px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: auto;
     text-align: center;
     margin-top: auto;
     margin-bottom: auto;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: grey;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
