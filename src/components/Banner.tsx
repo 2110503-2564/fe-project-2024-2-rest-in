@@ -30,13 +30,6 @@ export default function Banner() {
                     Welcome {session.user?.name}</div> 
                 : null
             }
-            <Link href="/cars" prefetch={true}>
-            <button className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border-none 
-            font-bold py-3 px-4 m-4 rounded-md z-30 absolute bottom-4 right-4
-            shadow-lg transform transition-transform duration-300 hover:scale-105">
-                View Products
-            </button>
-            </Link>
         </div>
         
     );
