@@ -62,7 +62,7 @@ const AllBookings = () => {
 
     try {
       await updateBooking(token, selectedBooking._id, {
-        //startDate: updatedStartDate,
+        startDate: updatedStartDate,
         endDate: updatedEndDate,
         createAt: new Date(now()), // Add creation time as a new date
       });
