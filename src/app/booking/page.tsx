@@ -1,102 +1,112 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { addBooking } from "@/redux/features/bookSlice";
-import { TextField, Button } from "@mui/material";
+import { Button, Snackbar, Alert, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 import DateReserve from "@/components/DateReserve";
 import { Dayjs } from "dayjs";
+import { createBooking } from "@/libs/createBooking";
+import { useSession } from "next-auth/react";
+import getCarProviders from "@/libs/getCarProviders";
 
-// ฟังก์ชันสร้างการจอง
-export default function Booking({ carId }: { carId: string }) {
+// booking page
+export default function Booking() {
+  const searchParams = useSearchParams();
+  const initialCarId = searchParams.get("carProviderId");
+
+  console.log("Car ID:", initialCarId);
+
   const dispatch = useDispatch<AppDispatch>();
-  
-  const [name, setName] = useState<string>('');
-  const [contactNumber, setContactNumber] = useState<string>('');
+  const { data: session } = useSession(); // Move useSession here
+
+  const [carId, setCarId] = useState<string | null>(initialCarId);
+  const [carProviders, setCarProviders] = useState<any[]>([]);
+  const [name, setName] = useState<string>("");
+  const [contactNumber, setContactNumber] = useState<string>("");
   const [pickupDate, setPickupDate] = useState<Dayjs | null>(null);
   const [returnDate, setReturnDate] = useState<Dayjs | null>(null);
-  const [carModel, setCarModel] = useState<string>(''); // เพิ่มฟิลด์สำหรับ carModel ถ้าต้องการ
 
-  // ฟังก์ชันสำหรับการส่งข้อมูลการจองไปยัง API
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
+
+  // ดึงข้อมูล car providers จาก API
+useEffect(() => {
+  const fetchCarProviders = async () => {
+    try {
+      const providers = await getCarProviders();  // เรียกใช้งาน getCarProviders
+      if (providers && providers.data) {  // ตรวจสอบว่า providers มี field 'data' หรือไม่
+        setCarProviders(providers.data);  // เก็บข้อมูล car providers ที่ได้จาก API
+      } else {
+        console.error("Failed to load car providers, no data found");
+        setSnackbarMessage("No car providers found.");
+        setSnackbarSeverity("error");
+        setOpenSnackbar(true);
+      }
+    } catch (error) {
+      console.error("Error fetching car providers:", error);
+      setSnackbarMessage("Failed to load car providers");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
+    }
+  };
+
+  fetchCarProviders();
+}, []);  // ทำแค่ครั้งแรกเมื่อ component โหลด
+
+
   const makeBooking = async () => {
-    if (name && contactNumber && pickupDate && returnDate) {
-      const item = {
-        nameLastname: name,
-        tel: contactNumber,
-        car: carId, // ส่ง carId ที่รับจาก props
-        pickupDate: pickupDate.format("YYYY-MM-DD"), // ส่งวันที่รับรถ
-        returnDate: returnDate.format("YYYY-MM-DD"), // ส่งวันที่คืนรถ
+    if (pickupDate && returnDate && carId) {
+      const bookingData = {
+        startDate: pickupDate.format("YYYY-MM-DD"),
+        endDate: returnDate.format("YYYY-MM-DD"),
       };
 
+      const token = session?.user?.token;
+
+      if (!token) {
+        setSnackbarMessage("Please login first.");
+        setSnackbarSeverity("error");
+        setOpenSnackbar(true);
+        return;
+      }
+
       try {
-        // ส่งการจองไปยัง API
-        const response = await fetch(`/api/v1/cars/${carId}/bookings`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(item),
-        });
-
-<<<<<<< HEAD
-        if (response.ok) {
-          const data = await response.json();
-          // บันทึกการจองใน Redux
-          dispatch(addBooking(data));
-          alert("Booking successful!");
+        const response = await createBooking(token, carId, bookingData);
+  
+        if (response.success) {
+          // Save booking in Redux
+          dispatch(addBooking(response));
+  
+          setSnackbarMessage("Booking successful!");
+          setSnackbarSeverity("success");
+          setOpenSnackbar(true);
         } else {
-          alert("Booking failed. Please try again.");
-||||||| 748d501
-    const [name, setName] = useState<string>('');
-    const [contactNumber, setContactNumber] = useState<string>('');
-    const [venue, setVenue] = useState<string>('');
-    const [bookingDate, setBookingDate] = useState<Dayjs | null>(null);
-
-    // const session = await getServerSession(authOptions)
-    // if(!session || !session.user.token)return null
-
-    // const profile = await getUserProfile(session.user.token)
-    // var createdAt = new Date(profile.data.createdAt)
-
-    const makeBooking = () => {
-        if (name && contactNumber && venue && bookingDate) {
-            const item: BookingItem = {
-                nameLastname: name,
-                tel: contactNumber,
-                venue: venue,
-                bookDate: dayjs(bookingDate).format("YYYY/MM/DD"),
-            };
-            dispatch(addBooking(item));
-=======
-    const [name, setName] = useState<string>('');
-    const [contactNumber, setContactNumber] = useState<string>('');
-    const [venue, setVenue] = useState<string>('');
-    const [bookingDate, setBookingDate] = useState<Dayjs | null>(null);
-
-    // const session = await getServerSession(authOptions)
-    // if(!session || !session.user.token)return null
-
-    // const profile = await getUserProfile(session.user.token)
-    // var createdAt = new Date(profile.data.createdAt)
-
-    const makeBooking = () => {
-        if (name && contactNumber && venue && bookingDate) {
-            const item: BookingData = {
-                nameLastname: name,
-                tel: contactNumber,
-                venue: venue,
-                bookDate: dayjs(bookingDate).format("YYYY/MM/DD"),
-            };
-            dispatch(addBooking(item));
->>>>>>> 6483a9590125fc393d67bbe3eea573969e18dca4
+          // If response.success is false, handle it here (this might be the case)
+          setSnackbarMessage("Booking failed. Please try again.");
+          setSnackbarSeverity("error");
+          setOpenSnackbar(true);
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error booking car:", error);
-        alert("Booking failed. Please try again.");
+  
+        // Log the error to see the full response from the backend
+        if (error.message.includes("has already booked 3 cars")) {
+          setSnackbarMessage("You have already booked 3 cars.");
+        } else {
+          setSnackbarMessage(error.message || "Booking failed. Please try again.");
+        }
+  
+        setSnackbarSeverity("error");
+        setOpenSnackbar(true);
       }
     } else {
-      alert("Please fill in all the fields.");
+      setSnackbarMessage("Please fill in all the fields.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
     }
   };
 
@@ -104,27 +114,22 @@ export default function Booking({ carId }: { carId: string }) {
     <main className="flex flex-col items-center space-y-4 py-6 bg-gray-100 min-h-screen">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg">
         <div className="text-xl font-medium text-center text-gray-700 mb-4">Car Booking</div>
-
-        <TextField
-          id="Name-Lastname"
-          name="Name-Lastname"
-          label="Name-Lastname"
-          variant="outlined"
-          fullWidth
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="mb-4"
-        />
-        <TextField
-          id="Contact-Number"
-          name="Contact-Number"
-          label="Contact Number"
-          variant="outlined"
-          fullWidth
-          value={contactNumber}
-          onChange={(e) => setContactNumber(e.target.value)}
-          className="mb-6"
-        />
+{/* 
+        Dropdown for car provider selection */}
+        <FormControl fullWidth variant="outlined" className="mb-4">
+          <InputLabel>Car Provider</InputLabel>
+          <Select
+            value={carId || ""}
+            onChange={(e) => setCarId(e.target.value)}
+            label="Car Provider"
+          >
+            {carProviders?.map((provider) => (
+              <MenuItem key={provider._id} value={provider._id}>
+                {provider.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
         <DateReserve
           onDateChange={(value: Dayjs) => setPickupDate(value)}
@@ -140,6 +145,17 @@ export default function Booking({ carId }: { carId: string }) {
           Book Car
         </Button>
       </div>
+
+      {/* Snackbar for friendly alert messages */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </main>
   );
 }

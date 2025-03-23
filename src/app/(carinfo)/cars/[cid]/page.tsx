@@ -27,12 +27,11 @@ export default async function carDetailPage({params} : {params:{cid:string}}){
                     <div>Daily Rate: {(carDetail.data.dailyrate)} ฿</div>
                 </div>
 
-                {/* <Link href={`/booking?id=${params.cid}&model=${carDetail.data.model}`}>
-                <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2
-                text-white shadow-sm">
+                <Link href={`/booking?carProviderId=${params.cid}`}>
+                    <button className="mt-4 block rounded-md bg-sky-600 hover:bg-indigo-600 px-4 py-2 text-white shadow-md">
                     Make Booking
-                </button>
-                </Link> */}
+                    </button>
+                </Link>
             </div>
         </main>
     )
