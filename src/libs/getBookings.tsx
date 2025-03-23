@@ -15,7 +15,7 @@ export const getBookings = async (token:string) => {
             sessionStorage.removeItem('token');  // ลบ token
             localStorage.removeItem('token');  // ลบ token จาก localStorage
             return; // อาจให้ผู้ใช้ล็อกอินใหม่
-          }
+        }
         throw new Error('Error fetching bookings');
     }
 

@@ -39,6 +39,7 @@ export default function Booking({ carId }: { carId: string }) {
           body: JSON.stringify(item),
         });
 
+<<<<<<< HEAD
         if (response.ok) {
           const data = await response.json();
           // บันทึกการจองใน Redux
@@ -46,6 +47,49 @@ export default function Booking({ carId }: { carId: string }) {
           alert("Booking successful!");
         } else {
           alert("Booking failed. Please try again.");
+||||||| 748d501
+    const [name, setName] = useState<string>('');
+    const [contactNumber, setContactNumber] = useState<string>('');
+    const [venue, setVenue] = useState<string>('');
+    const [bookingDate, setBookingDate] = useState<Dayjs | null>(null);
+
+    // const session = await getServerSession(authOptions)
+    // if(!session || !session.user.token)return null
+
+    // const profile = await getUserProfile(session.user.token)
+    // var createdAt = new Date(profile.data.createdAt)
+
+    const makeBooking = () => {
+        if (name && contactNumber && venue && bookingDate) {
+            const item: BookingItem = {
+                nameLastname: name,
+                tel: contactNumber,
+                venue: venue,
+                bookDate: dayjs(bookingDate).format("YYYY/MM/DD"),
+            };
+            dispatch(addBooking(item));
+=======
+    const [name, setName] = useState<string>('');
+    const [contactNumber, setContactNumber] = useState<string>('');
+    const [venue, setVenue] = useState<string>('');
+    const [bookingDate, setBookingDate] = useState<Dayjs | null>(null);
+
+    // const session = await getServerSession(authOptions)
+    // if(!session || !session.user.token)return null
+
+    // const profile = await getUserProfile(session.user.token)
+    // var createdAt = new Date(profile.data.createdAt)
+
+    const makeBooking = () => {
+        if (name && contactNumber && venue && bookingDate) {
+            const item: BookingData = {
+                nameLastname: name,
+                tel: contactNumber,
+                venue: venue,
+                bookDate: dayjs(bookingDate).format("YYYY/MM/DD"),
+            };
+            dispatch(addBooking(item));
+>>>>>>> 6483a9590125fc393d67bbe3eea573969e18dca4
         }
       } catch (error) {
         console.error("Error booking car:", error);
