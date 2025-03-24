@@ -1,14 +1,20 @@
 import Link from "next/link";
 import Card from "./Card";
+import SortButtons from "./SortButtons";
 
 export default async function CarCatalog({CarProviderJson}: {CarProviderJson: Promise<CarProviderJson>;}) {
-  const CarProviderJsonReady = await CarProviderJson
+  const CarProviderJsonReady = await CarProviderJson;
   return (
     <>
-    <div className="text-center text-xl">Explore {CarProviderJsonReady.count} models in our catalog</div>
-      <div className="m-4 flex flex-row content-around, justify-around flex-wrap">
+    <div className="flex items-center justify-between mb-6">
+      <SortButtons />
+      <div className="text-sm text-gray-500 bg-gray-50 px-4 py-2 rounded-full">
+        {CarProviderJsonReady.count} cars found
+      </div>
+    </div>
+      <div className="m-4 flex flex-row content-around justify-around flex-wrap gap-6">
         {CarProviderJsonReady.data.map((data:CarProvider) => (
-          <Link href={`/cars/${data.id}`} className="w-[250px] flex ">
+          <Link href={`/cars/${data.id}`} className="w-[250px] flex">
             <Card
               key={data.name}
               carName={data.name}
