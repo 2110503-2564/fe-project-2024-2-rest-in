@@ -11,7 +11,7 @@ export default function Card({carName, imgSrc, onRating, price, seat}:{carName:s
 
     const [isLiked, setIsLiked] = useState(false);
 
-    const handleLike = (e: React.MouseEvent) => {
+    const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         setIsLiked(!isLiked);
     };

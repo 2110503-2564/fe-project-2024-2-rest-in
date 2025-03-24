@@ -16,9 +16,9 @@ export default function Banner() {
   const [index, setIndex] = useState(0);
 
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(500);
+  const [maxPrice, setMaxPrice] = useState(50000);
   const [minSeat, setMinSeat] = useState(0);
-  const [maxSeat, setMaxSeat] = useState(4);
+  const [maxSeat, setMaxSeat] = useState(400);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
