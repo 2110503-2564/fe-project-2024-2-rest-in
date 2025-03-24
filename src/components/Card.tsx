@@ -5,7 +5,7 @@ import InteractiveCard from './InteractiveCard';
 import {Rating} from "@mui/material";
 import {useState} from 'react';
 
-export default function Card({carName, imgSrc, onRating}:{carName:string, imgSrc:string, onRating?:Function}) {
+export default function Card({carName, imgSrc, onRating, price, seat}:{carName:string, imgSrc:string, onRating?:Function, price:number, seat:number}) {
     const  [value, setValue] = useState<number | null>(0);
     return (
         <InteractiveCard>

@@ -22,6 +22,7 @@ export default function Banner() {
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+    router.push(`/cars?minprice=${minPrice}&maxprice=${maxPrice}&minseat=${minSeat}&maxseat=${maxSeat}&relevance=&province=&toplike=&price=&seat=&page=&limit=`);
   };
 
   const router = useRouter();
@@ -116,13 +117,13 @@ export default function Banner() {
           </div>
         </div>
 
-        <Link href="/cars" prefetch={true}>
+        {/* <Link href="/cars" prefetch={true}> */}
           <button className="bg-[#FE7F3F] text-white border-none 
           font-bold py-3 px-5 rounded-md shadow-lg transition-transform duration-300 hover:scale-105 w-full text-center"
           onClick={handleClick}>
             Search
           </button>
-        </Link>
+        {/* </Link> */}
 
       </div>
     </div>
