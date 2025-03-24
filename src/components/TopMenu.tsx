@@ -27,11 +27,14 @@ export default function TopMenu() {
             <div className="flex items-center space-x-4 absolute right-0 h-full px-8">
                 {session ? (
                     <>
+                        <Link href='/cars' prefetch={true} className={`${styles.itemcontainer} ${pathname === '/cars' ? styles.active : ''}`}>
+                            Products
+                        </Link>
                         <Link href='/booking' prefetch={true} className={`${styles.itemcontainer} ${pathname === '/booking' ? styles.active : ''}`}>
-                            Booking
+                            Book
                         </Link>
                         <Link href='/mybooking' prefetch={true} className={`${styles.itemcontainer} ${pathname === '/mybooking' ? styles.active : ''}`}>
-                            My Booking
+                            All Bookings
                         </Link>
                         <Link href="/api/auth/signout" prefetch={true} className={styles.itemcontainer + "w-auto text-cyan-600 text-md"}>
                             Sign-Out of {session.user?.name}
