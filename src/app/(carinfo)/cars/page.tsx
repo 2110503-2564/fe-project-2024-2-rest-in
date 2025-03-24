@@ -21,37 +21,37 @@ export default async function Venue() {
 
     let url = "";
 
-    if(minprice != ""){
+    if(minprice != "" && minprice != null){
         url += `minprice=${minprice}&`;
     }
-    if(maxprice != ""){
+    if(maxprice != "" && maxprice != null){
         url += `maxprice=${maxprice}&`;
     }
-    if(minseat != ""){
+    if(minseat != "" && minseat != null){
         url += `minseat=${minseat}&`;
     }
-    if(maxseat != ""){
+    if(maxseat != "" && maxseat != null){
         url += `maxseat=${maxseat}&`;
     }  
-    if(relevance != ""){
+    if(relevance != "" && relevance != null){
         url += `relevance=${relevance}&`;
     }
-    if(province != ""){
+    if(province != "" && province != null){
         url += `province=${province}&`;
     }  
-    if(toplike != ""){
+    if(toplike != "" && toplike != null){
         url += `toplike=${toplike}&`;
     }
-    if(seat != ""){
+    if(seat != "" && seat != null){
         url += `seat=${seat}&`;
     }
-    if(page != ""){
+    if(page != "" && page != null){
         url += `page=${page}&`;
     }
-    if(limit != ""){
+    if(limit != "" && limit != null){
         url += `limit=${limit}&`;
     }
-    if(price != ""){
+    if(price != "" && price != null){
         url += `price=${price}&`;
     }
     const carProviders = await getCarProviders(url);
