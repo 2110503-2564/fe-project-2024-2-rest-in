@@ -12,8 +12,8 @@ export default function Card({carName, imgSrc, onRating, price, seat}:{carName:s
     const [isLiked, setIsLiked] = useState(false);
 
     const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
         setIsLiked(!isLiked);
+        e.stopPropagation();
     };
   
     return (
@@ -45,11 +45,11 @@ export default function Card({carName, imgSrc, onRating, price, seat}:{carName:s
                 }
                 <div className="flex justify-between w-full items-center">
                 <p className="text-base font-medium">${price}</p>
-                <button onClick={handleLike} className="text-2xl">
+                <div onClick={(e) => { e.stopPropagation(); handleLike(e); }} className="text-2xl">
                     <AiOutlineHeart
                     className={`${isLiked ? "text-red-500" : "text-gray-500"}`}
                     />
-                </button>
+                </div>
                 </div>
             </div>
         </InteractiveCard>
