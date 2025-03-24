@@ -58,12 +58,16 @@ export default async function Venue() {
 
     
     return (
-        <main className="text-center p-5">
-            <h1 className="text-xl font-medium">Select Your Place</h1>
-            <Suspense fallback={<p>Loading...<LinearProgress/></p>}>
-            <CarCatalog CarProviderJson={carProviders}></CarCatalog>
-            </Suspense>
-            <Filter></Filter>
+        <main className="flex flex-row">
+            <div className="w-1/4 p-4 border-r h-screen block fixed top-0">
+                <Filter></Filter>
+            </div>
+            <div className="w-3/4 p-5 ml-auto" style={{ marginLeft: '25%' }}>
+                <h1 className="text-xl font-medium mb-4">Select Your Place</h1>
+                <Suspense fallback={<p>Loading...<LinearProgress/></p>}>
+                    <CarCatalog CarProviderJson={carProviders}></CarCatalog>
+                </Suspense>
+            </div>
         </main>
     )
 }

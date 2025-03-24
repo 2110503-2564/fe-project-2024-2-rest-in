@@ -7,9 +7,9 @@ import styles from './card.module.css';
 export default function Card({ carName, imgSrc, price, seat }: { carName: string, imgSrc: string, price: number, seat: number }) {
     const [isLiked, setIsLiked] = useState(false);
 
-    const handleLike = (e: React.MouseEvent) => {
-        e.stopPropagation(); // หยุดการ propagation ของ event
-        setIsLiked(!isLiked); // เปลี่ยนสถานะการกด Like
+    const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.stopPropagation();
+        setIsLiked(!isLiked);
     };
 
     return (
