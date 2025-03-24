@@ -111,9 +111,9 @@ useEffect(() => {
   };
 
   return (
-    <main className="flex flex-col items-center space-y-4 py-6 bg-gray-100 min-h-screen">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-lg">
-        <div className="text-xl font-medium text-center text-gray-700 mb-4">Car Booking</div>
+    <main className="flex flex-col items-center space-y-4 py-6 bg-[#FFD8A3] min-h-screen">
+      <div className="bg-gray-50 shadow-lg rounded-lg p-6 w-full max-w-lg">
+        <div className="text-xl font-medium text-center text-gray-700 mb-4 bg-gray-20">Car Booking</div>
 {/* 
         Dropdown for car provider selection */}
         <FormControl fullWidth variant="outlined" className="mb-4">

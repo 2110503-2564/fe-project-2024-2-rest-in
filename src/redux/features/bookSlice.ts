@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type BookState = {
-    bookItems: BookingItem[];
+    bookItems: BookingData[];
 }
 
 const initialState: BookState = { bookItems: [] }
@@ -10,11 +10,11 @@ export const bookSlice = createSlice ({
     name: "book",
     initialState,
     reducers: {
-        addBooking: (state, action: PayloadAction<BookingItem>) => {
+        addBooking: (state, action: PayloadAction<BookingData>) => {
             const index = state.bookItems.findIndex(
                 (item) =>
-                    item.venue === action.payload.venue &&
-                    item.bookDate === action.payload.bookDate
+                    item.carProvider === action.payload.carProvider &&
+                    item.startDate === action.payload.startDate
             );
             if (index !== -1) {
                 // if booking in same place and date, use current booking
@@ -24,12 +24,12 @@ export const bookSlice = createSlice ({
                 state.bookItems.push(action.payload);
             }
         },
-        removeBooking: (state, action:PayloadAction<BookingItem>)=>{
+        removeBooking: (state, action:PayloadAction<BookingData>)=>{
             const remainItems = state.bookItems.filter(obj => {
-                return ((obj.venue !== action.payload.venue)
-                || (obj.bookDate !== action.payload.bookDate)
-                || (obj.nameLastname !== action.payload.nameLastname)
-                || (obj.tel !== action.payload.tel))
+                return ((obj.carProvider !== action.payload.carProvider)
+                || (obj.startDate !== action.payload.startDate)
+                || (obj.user !== action.payload.user)
+                || (obj.endDate !== action.payload.endDate))
             })
             state.bookItems = remainItems
         }
