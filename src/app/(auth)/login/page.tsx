@@ -35,42 +35,52 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-5">
-      <h1 className="text-2xl font-bold mb-4">Login</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          className="w-full p-2 border rounded"
-        />
-        <button 
-          type="submit" 
-          disabled={isLoading}
-          className={`w-full p-2 rounded text-white ${
-            isLoading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"
-          }`}
-        >
-          {isLoading ? "Signing in..." : "Sign In"}
-        </button>
-      </form>
-      <p className="mt-4">
-        Don't have an account?{" "}
-        <Link href="/register" prefetch={true} className="text-blue-500 hover:underline">
-          Register
-        </Link>
-      </p>
-    </div>
-  );
+      <div className="min-h-screen flex items-center justify-start bg-cover bg-center px-10" style={{ backgroundImage: "url('/img/carbg.jpg')" }}>
+        <div className="w-full max-w-lg p-8 ">
+          <h1 className="text-4xl font-bold mb-6 text-[#5C4590]">Sign In</h1>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+  
+          <p className="mb-4 text-gray-600">
+            Don't have an account?{" "}
+            <Link href="/register" prefetch={true} className="text-[#FE7F3F] hover:underline">
+              Sign Up
+            </Link>
+          </p>
+  
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full p-3 border rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full p-3 border rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
+            </div>
+            
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`w-1/3 p-3 rounded-3xl text-white ${isLoading ? "bg-gray-400" : "bg-[#FE7F3F] hover:bg-[#FF5F0E] transition duration-200"}`}
+            >
+              {isLoading ? "Signing in..." : "Sign In"}
+            </button>
+          </form>
+        </div>
+      </div>
+    );
 }
