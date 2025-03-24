@@ -1,42 +1,50 @@
-import Image from "next/image"
-import getCarProvider from "@/libs/getCarProvider"
-import Link from "next/link"
+import Image from "next/image";
+import getCarProvider from "@/libs/getCarProvider";
+import Link from "next/link";
 
-export default async function carDetailPage({params} : {params:{cid:string}}){
-    
-    const carDetail = await getCarProvider(params.cid)
-    //mock data
-    // const mockVenueRepo = new Map()
-    // mockVenueRepo.set("001",{name: "The Bloom Pavilion", image: "/img/bloom.jpg"})
-    // mockVenueRepo.set("002",{name: "Spark Space", image: "/img/sparkspace.jpg"})
-    // mockVenueRepo.set("003",{name: "The Grand Table", image: "/img/grandtable.jpg"})
-    return(
-        <main className="text-center p-5">
-            <h1 className = "text-lg font-medium">{carDetail.data.name}</h1>
-            <div className="flex flex-row my-5">
-                <Image src={carDetail.data.picture}
-                alt='Venue Image'
-                width={0} height={0} sizes="100vw"
-                className="rounded-lg w-[30%]"/>
-                <div className="text-md mx-5 text-left">Name: {(carDetail.data.name)}
-                    <div>Address: {(carDetail.data.address)}</div>
-                    <div>District: {(carDetail.data.district)}</div>
-                    <div>Province: {(carDetail.data.province)}</div>
-                    <div>Postal Code: {(carDetail.data.postalcode)}</div>
-                    <div>Tel: {(carDetail.data.tel)}</div>
-                    <div>Daily Rate: {(carDetail.data.dailyrate)} ฿</div>
+export default async function carDetailPage({ params }: { params: { cid: string } }) {
+    const carDetail = await getCarProvider(params.cid);
+
+    return (
+        <main className="flex justify-center items-center min-h-screen bg-[#FFD8A3] p-6">
+            <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden p-6">
+                <h1 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+                    {carDetail.data.name}
+                </h1>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* ภาพรถ */}
+                    <div className="flex justify-center">
+                        <Image
+                            src={carDetail.data.picture}
+                            alt="Car Image"
+                            width={500} height={300}
+                            className="rounded-lg shadow-md w-full object-cover"
+                        />
+                    </div>
+
+                    <div className="text-left space-y-3 text-gray-700">
+                        <p className="text-lg font-medium text-gray-900">📌 Name: {carDetail.data.name}</p>
+                        <p>🏠 Address: {carDetail.data.address}</p>
+                        <p>📍 District: {carDetail.data.district}</p>
+                        <p>🏙️ Province: {carDetail.data.province}</p>
+                        <p>📮 Postal Code: {carDetail.data.postalcode}</p>
+                        <p>📞 Tel: {carDetail.data.tel}</p>
+                        <p className="text-lg font-semibold text-orange-600">💰 Daily Rate: {carDetail.data.dailyrate} ฿</p>
+                        
+                        <div className="mt-5">
+                            <Link href={`/booking?carProviderId=${params.cid}`}>
+                                <button className="w-full px-4 py-3 text-white bg-[#FE7F3F] hover:bg-[#F75C2C] rounded-lg shadow-md transition duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12l6 6 6-6" />
+                                    </svg>
+                                    🚗 Make Booking
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
-
-                <Link href={`/booking?carProviderId=${params.cid}`}>
-                    <button className="mt-4 block rounded-md bg-sky-600 hover:bg-indigo-600 px-4 py-2 text-white shadow-md">
-                    Make Booking
-                    </button>
-                </Link>
             </div>
         </main>
-    )
+    );
 }
-
-// export async function generateStaticParams() {
-//     return [{cid:'001'}, {cid:'002'}, {cid:'003'}]
-// }

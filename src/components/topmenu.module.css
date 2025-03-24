@@ -1,6 +1,6 @@
 .menucontainer {
     height: 70px;
-    background-color: transparent;
+    background-color: white;
     position: fixed;
     top: 0px;
     left:0px;
@@ -37,6 +37,6 @@
 }
 
 .active {
-    background-color: #f3f4f6;
+    color: orange;
     border-radius: 4px;
 }

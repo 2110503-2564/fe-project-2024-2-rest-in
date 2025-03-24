@@ -9,6 +9,7 @@ interface CarProvider {
     picture: string;
     dailyrate: number;
     __v: number;
+    seat: number;
     booking: BookingData[];
     id: string;
   }

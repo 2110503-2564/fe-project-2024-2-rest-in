@@ -78,7 +78,7 @@ export default function Banner() {
               type="number"
               value={maxSeat}
               min={minSeat + 1}
-              max="8"
+              max="300"
               onChange={(e) => setMaxSeat(Number(e.target.value))}
               className="w-1/2 p-2 rounded-md border border-gray-400"
             />
@@ -110,7 +110,7 @@ export default function Banner() {
               type="number"
               value={maxPrice}
               min={minPrice + 1}
-              max="1000"
+              max="1000000000000"
               onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="w-1/2 p-2 rounded-md border border-gray-400"
             />
