@@ -7,9 +7,9 @@ export default function Card({carName, imgSrc, price, seat}:{carName:string, img
 
     const [isLiked, setIsLiked] = useState(false);
 
-    const handleLike = (e: React.MouseEvent<HTMLDivElement>) => { // Updated type here
+    const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
         setIsLiked(!isLiked);
-        e.stopPropagation();
+        e.preventDefault();
     };
 
     return (
@@ -27,7 +27,7 @@ export default function Card({carName, imgSrc, price, seat}:{carName:string, img
                 <p className="text-sm text-gray-400">{seat} seats</p>
                 <div className="flex justify-between w-full items-center">
                 <p className="text-base font-medium">${price}</p>
-                <div onClick={(e) => { handleLike(e); e.stopPropagation(); }} className="text-2xl">
+                <div onClick={(e) => { e.stopPropagation(); handleLike(e); }} className="text-2xl">
                     <AiOutlineHeart
                     className={`${isLiked ? "text-red-500" : "text-gray-500"}`}
                     />
