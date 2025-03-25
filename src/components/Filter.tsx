@@ -1,13 +1,40 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { Slider } from "@mui/material";
 // import { Search } from "@mui/icons-material";
 
-const Filter = () => {
+export default function Filter() {
+
+  let searchParams = useSearchParams();
+
+
+  
   const router = useRouter();
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {    // router.push(`/cars?minprice=${minPrice}&maxprice=${maxPrice}&minseat=${minSeat}&maxseat=${maxSeat}&relevance=&province=&toplike=&price=&seat=&page=&limit=`);
-    router.push(`/cars?minprice=${priceRange[0]}&maxprice=${priceRange[1]}&minseat=${seatRange[0]}&maxseat=${seatRange[1]}&relevance=${searchQuery}&province=${province}`);
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => { 
+    let url = `/cars?minprice=${priceRange[0]}&maxprice=${priceRange[1]}&minseat=${seatRange[0]}&maxseat=${seatRange[1]}&relevance=${searchQuery}&province=${province}&`;
+    let toplike = searchParams.get('toplike');
+    let seat = searchParams.get('seat');
+    let page = searchParams.get('page');
+    let limit = searchParams.get('limit');
+    let price = searchParams.get('price');
+    
+    if(toplike != "" && toplike != null){
+        url += `toplike=${toplike}&`;
+    }
+    if(seat != "" && seat != null){
+        url += `seat=${seat}&`;
+    }
+    if(page != "" && page != null){
+        url += `page=${page}&`;
+    }
+    if(limit != "" && limit != null){
+        url += `limit=${limit}&`;
+    }
+    if(price != "" && price != null){
+        url += `price=${price}&`;
+    }
+  router.push(url);
 
   };
   const minPrice = 0;
@@ -118,4 +145,3 @@ const Filter = () => {
   );
 };
 
-export default Filter;
