@@ -68,7 +68,7 @@ export default function Venue() {
 
     return (
         <main className="flex flex-row">
-            <div className="w-1/5 p-4 border-r h-screen block fixed top-[10%]">
+            <div className="w-1/5  border-r h-screen block fixed top-[10%]">
                 <Filter></Filter>
             </div>
             <div className="w-4/5 p-2 ml-auto">
