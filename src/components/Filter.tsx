@@ -172,7 +172,6 @@ export default function Filter() {
           <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
             onChange={(e) => setProvince(e.target.value)}
           >
-            <option value={province}>{province}</option>
             <option value="">All</option>
             <option value="Bangkok">Bangkok</option>
             <option value="Chiang Mai">Chiang Mai</option>
