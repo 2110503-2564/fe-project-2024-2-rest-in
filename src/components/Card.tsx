@@ -3,8 +3,7 @@ import InteractiveCard from './InteractiveCard';
 import {useState} from 'react';
 import {AiOutlineHeart} from 'react-icons/ai';
 
-export default function Card({carName, imgSrc, onRating, price, seat}:{carName:string, imgSrc:string, onRating?:Function, price:number, seat:number}) {
-    const  [value, setValue] = useState<number | null>(0);
+export default function Card({carName, imgSrc, price, seat}:{carName:string, imgSrc:string, price:number, seat:number}) {
 
     const [isLiked, setIsLiked] = useState(false);
 
