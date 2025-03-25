@@ -17,10 +17,13 @@ export default async function CarCatalog({CarProviderJson}: {CarProviderJson: Pr
           <Link href={`/cars/${data.id}`} className="w-[250px] flex" prefetch={true}>
             <Card
               key={data.name}
+              carId={data.id}
               carName={data.name}
               imgSrc={data.picture}
               price={data.dailyrate}
               seat={data.seat}
+              like={data.like}
+              province={data.province}
             />
           </Link>
         ))}

@@ -7,6 +7,7 @@ interface CarProvider {
     postalcode: string;
     tel: string;
     picture: string;
+    like: number;
     dailyrate: number;
     __v: number;
     seat: number;
