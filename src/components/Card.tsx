@@ -45,10 +45,15 @@ export default function Card({carId, carName, imgSrc, price, seat, like, provinc
           setSnackbarMessage('Car liked successfully');
           setSnackbarSeverity('success');
           setOpenSnackbar(true);
-        } catch (error) {
+        } catch (error: unknown) {
           console.error("Error liking car:", error);
-          setSnackbarMessage('Failed to like the car');
-          setSnackbarSeverity('error');
+          if (error instanceof Error && error.message === 'You have already liked this car') {
+            setSnackbarMessage('You already liked this car');
+            setSnackbarSeverity('info');
+          } else {
+            setSnackbarMessage('Failed to like the car');
+            setSnackbarSeverity('error');
+          }
           setOpenSnackbar(true);
         }
       };

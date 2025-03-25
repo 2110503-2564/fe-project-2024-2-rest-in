@@ -10,7 +10,12 @@ export default async function likeCar(cid: string, token: string) {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to like the car");
+        const errorResponse = await response.json();
+        if (errorResponse.error === "You have already liked this car") {
+            throw new Error("You have already liked this car");
+        } else {
+            throw new Error("Failed to like the car");
+        }
     }
 
     return await response.json();
