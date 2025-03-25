@@ -111,7 +111,7 @@ useEffect(() => {
   };
 
   return (
-    <main className="flex flex-col items-center space-y-4 py-6 bg-[#FFD8A3] min-h-screen">
+    <main className="flex flex-col items-center space-y-4 py-20 bg-[#FFD8A3] min-h-[90vh]">
       <div className="bg-gray-50 shadow-lg rounded-lg p-6 w-full max-w-lg">
         <div className="text-xl font-medium text-center text-gray-700 mb-4 bg-gray-20">Car Booking</div>
 {/* 
@@ -140,7 +140,9 @@ useEffect(() => {
           type="submit"
           name="Book Car"
           className="w-full rounded-md bg-sky-600 text-white py-2 mt-4 hover:bg-sky-700 transition"
-          onClick={makeBooking}
+          onClick={() => {
+            makeBooking();
+          }}
         >
           Book Car
         </Button>

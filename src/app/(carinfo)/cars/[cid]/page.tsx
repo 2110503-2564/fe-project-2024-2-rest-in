@@ -6,7 +6,7 @@ export default async function carDetailPage({ params }: { params: { cid: string 
     const carDetail = await getCarProvider(params.cid);
 
     return (
-        <main className="flex justify-center items-center min-h-screen bg-[#FFD8A3] p-6">
+        <main className="flex justify-center items-center min-h-[90vh] bg-[#FFD8A3] p-6">
             <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg overflow-hidden p-6">
                 <h1 className="text-2xl font-semibold text-gray-800 text-center mb-4">
                     {carDetail.data.name}
@@ -35,9 +35,6 @@ export default async function carDetailPage({ params }: { params: { cid: string 
                         <div className="mt-5">
                             <Link href={`/booking?carProviderId=${params.cid}`}>
                                 <button className="w-full px-4 py-3 text-white bg-[#FE7F3F] hover:bg-[#F75C2C] rounded-lg shadow-md transition duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12l6 6 6-6" />
-                                    </svg>
                                     🚗 Make Booking
                                 </button>
                             </Link>

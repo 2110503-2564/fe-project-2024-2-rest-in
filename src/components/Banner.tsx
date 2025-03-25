@@ -30,9 +30,8 @@ export default function Banner() {
   console.log(session?.user.token);
 
   return (
-    // <div className={styles.banner} onClick={()=>{setIndex(index+1)}}>
-    //     <Image src={covers[index%4]}
-    <div className={styles.banner}>
+
+    <div className="p-5 m-0 w-full h-[90vh] relative">
       <Image
         src={"/img/cover1.png"}
         alt="Event"

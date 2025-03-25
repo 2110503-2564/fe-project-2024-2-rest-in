@@ -9,13 +9,12 @@ export default function SortButtons() {
   const [selectedPrice, setSelectedPrice] = useState("Price: Low to High");
   const [selectedSeat, setSelectedSeat] = useState("Seat: Low to High");
   const [activeButton, setActiveButton] = useState("");
-  console.log("first " + activeButton);
 
   const router = useRouter();
-  let searchParams = useSearchParams();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    // เช็ค URL และตั้งค่าเริ่มต้นของปุ่ม
+    // Initialize button states from URL parameters
     const toplike = searchParams.get('toplike');
     const seat = searchParams.get('seat');
     const price = searchParams.get('price');
@@ -37,53 +36,58 @@ export default function SortButtons() {
     }
   }, [searchParams]);
 
-  const handleClick = () => {  
-    console.log(activeButton);
-
-    let url = "";
-    if(activeButton != ""){
-      if (activeButton === "Most Popular") {
-        url += `toplike=true&`;
-      } else if (activeButton === "Seat: Low to High") {
-        url += `seat=low&`;
-      } else if (activeButton === "Seat: High to Low") {
-        url += `seat=high&`;
-      } else if (activeButton === "Price: Low to High") {
-        url += `price=low&`;
-      } else if (activeButton === "Price: High to Low") {
-        url += `price=high&`;
-      } 
-    } 
-      
-
-
-    let minprice = searchParams.get('minprice');
-    let maxprice = searchParams.get('maxprice');
-    let minseat = searchParams.get('minseat');
-    let maxseat = searchParams.get('maxseat');
-    let relevance = searchParams.get('relevance');
-    let province = searchParams.get('province');
-
-    if(minprice != "" && minprice != null){
-        url += `minprice=${minprice}&`;
+  const updateUrl = (newActiveButton: any) => {
+    const params = new URLSearchParams();
+    
+    // Clear previous sort parameters
+    params.delete('toplike');
+    params.delete('seat');
+    params.delete('price');
+    
+    // Set new sort parameter based on active button
+    if (newActiveButton) {
+      if (newActiveButton === "Most Popular") {
+        params.set('toplike', 'true');
+      } else if (newActiveButton === "Seat: Low to High") {
+        params.set('seat', 'low');
+      } else if (newActiveButton === "Seat: High to Low") {
+        params.set('seat', 'high');
+      } else if (newActiveButton === "Price: Low to High") {
+        params.set('price', 'low');
+      } else if (newActiveButton === "Price: High to Low") {
+        params.set('price', 'high');
+      }
     }
-    if(maxprice != "" && maxprice != null){
-        url += `maxprice=${maxprice}&`;
-    }
-    if(minseat != "" && minseat != null){
-        url += `minseat=${minseat}&`;
-    }
-    if(maxseat != "" && maxseat != null){
-        url += `maxseat=${maxseat}&`;
-    }  
-    if(relevance != "" && relevance != null){
-        url += `relevance=${relevance}&`;
-    }
-    if(province != "" && province != null){
-        url += `province=${province}&`;
-    }  
+    
+    // Preserve other filter parameters
+    const preserveParams = ['minprice', 'maxprice', 'minseat', 'maxseat', 'relevance', 'province'];
+    preserveParams.forEach(param => {
+      const value = searchParams.get(param);
+      if (value) params.set(param, value);
+    });
 
-    router.push(`/cars?${url}`);
+    router.push(`/cars?${params.toString()}`);
+  };
+
+  const handleButtonClick = (buttonType: any) => {
+    const newActiveButton = activeButton === buttonType ? "" : buttonType;
+    setActiveButton(newActiveButton);
+    updateUrl(newActiveButton);
+    setShowSeatDropdown(false);
+    setShowPriceDropdown(false);
+  };
+
+  const handleDropdownSelect = (type: any, value: any, displayText: any) => {
+    if (type === 'seat') {
+      setSelectedSeat(displayText);
+      setActiveButton(displayText);
+    } else {
+      setSelectedPrice(displayText);
+      setActiveButton(displayText);
+    }
+    updateUrl(displayText);
+    setShowSeatDropdown(false);
+    setShowPriceDropdown(false);
   };
 
   return (
@@ -91,98 +95,93 @@ export default function SortButtons() {
       <span className="text-sm text-gray-600">Sort by</span>
       <div className="flex gap-2">
         <button 
-          className={`px-3 py-1.5 text-sm rounded-full ${activeButton === "Most Popular" ? "bg-orange-500" : "bg-gray-100 hover:bg-gray-200"}`}
-          onClick={() => {
-            setActiveButton(activeButton === "Most Popular" ? "" : "Most Popular");
-            handleClick();
-            setShowSeatDropdown(false);
-            setShowPriceDropdown(false);
-          }}
+          className={`px-3 py-1.5 text-sm rounded-full ${
+            activeButton === "Most Popular" 
+              ? "bg-orange-500 text-white" 
+              : "bg-gray-100 hover:bg-gray-200 text-gray-800"
+          }`}
+          onClick={() => handleButtonClick("Most Popular")}
         >
           Most Popular
         </button>
+        
+        {/* Seat Sort Button */}
         <div className="relative">
-          <button 
-            className={`px-3 py-1.5 text-sm rounded-full ${activeButton === selectedSeat ? "bg-orange-500" : "bg-gray-100 hover:bg-gray-200"} flex items-center gap-1`}
-            onClick={() => {
-              setActiveButton(activeButton === selectedSeat ? "" : selectedSeat);
-              handleClick();
-              setShowPriceDropdown(false);
-            }}
-          >
-            {selectedSeat}
-          </button>
-          <span 
-            className="ml-1 cursor-pointer" 
-            onClick={() => setShowSeatDropdown(!showSeatDropdown)}
-          >
-            ▼
-          </span>
+          <div className={`flex items-center px-3 py-1.5 text-sm rounded-full ${
+            activeButton.startsWith("Seat:") 
+              ? "bg-orange-500 text-white" 
+              : "bg-gray-100 hover:bg-gray-200 text-gray-800"
+          }`}>
+            <button 
+              className="flex-1 text-left"
+              onClick={() => handleButtonClick(selectedSeat)}
+            >
+              {selectedSeat}
+            </button>
+            <button 
+              className="ml-1 text-xs"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowSeatDropdown(!showSeatDropdown);
+                setShowPriceDropdown(false);
+              }}
+            >
+              ▼
+            </button>
+          </div>
           {showSeatDropdown && (
-            <div className="absolute top-full left-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10">
+            <div className="absolute top-full left-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10 min-w-full">
               <button 
-                className="w-full px-4 py-2 text-sm text-left hover:bg-gray-50"
-                onClick={() => {
-                  setSelectedSeat("Seat: Low to High");
-                  setActiveButton("Seat: Low to High");
-                  handleClick();
-                  setShowSeatDropdown(false);
-                }}
+                className="w-full px-4 py-2 text-sm text-left hover:bg-gray-50 whitespace-nowrap"
+                onClick={() => handleDropdownSelect('seat', 'low', 'Seat: Low to High')}
               >
                 Seat: Low to High 
               </button>
               <button 
-                className="w-full px-4 py-2 text-sm text-left hover:bg-gray-50"
-                onClick={() => {
-                  setSelectedSeat("Seat: High to Low");
-                  setActiveButton("Seat: High to Low");
-                  handleClick();
-                  setShowSeatDropdown(false);
-                }}
+                className="w-full px-4 py-2 text-sm text-left hover:bg-gray-50 whitespace-nowrap"
+                onClick={() => handleDropdownSelect('seat', 'high', 'Seat: High to Low')}
               >
                 Seat: High to Low
               </button>
             </div>
           )}
         </div>
+        
+        {/* Price Sort Button */}
         <div className="relative">
-          <button 
-            className={`px-3 py-1.5 text-sm rounded-full ${activeButton === selectedPrice ? "bg-orange-500" : "bg-gray-100 hover:bg-gray-200"} flex items-center gap-1`}
-            onClick={() => {
-              setActiveButton(activeButton === selectedPrice ? "" : selectedPrice);
-              handleClick();
-              setShowSeatDropdown(false);
-            }}
-          >
-            {selectedPrice}
-          </button>
-          <span 
-            className="ml-1 cursor-pointer" 
-            onClick={() => setShowPriceDropdown(!showPriceDropdown)}
-          >
-            ▼
-          </span>
+          <div className={`flex items-center px-3 py-1.5 text-sm rounded-full ${
+            activeButton.startsWith("Price:") 
+              ? "bg-orange-500 text-white" 
+              : "bg-gray-100 hover:bg-gray-200 text-gray-800"
+          }`}>
+            <button 
+              className="flex-1 text-left"
+              onClick={() => handleButtonClick(selectedPrice)}
+            >
+              {selectedPrice}
+            </button>
+            <button 
+              className="ml-1 text-xs"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowPriceDropdown(!showPriceDropdown);
+                setShowSeatDropdown(false);
+              }}
+            >
+              ▼
+            </button>
+          </div>
           {showPriceDropdown && (
-            <div className="absolute top-full left-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10">
+            <div className="absolute top-full left-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10 min-w-full">
               <button 
-                className="w-full px-4 py-2 text-sm text-left hover:bg-gray-50"
-                onClick={() => {
-                  setSelectedPrice("Price: Low to High");
-                  setActiveButton("Price: Low to High");
-                  handleClick();
-                  setShowPriceDropdown(false);
-                }}
+                className="w-full px-4 py-2 text-sm text-left hover:bg-gray-50 whitespace-nowrap"
+                onClick={() => handleDropdownSelect('price', 'low', 'Price: Low to High')}
               >
                 Price: Low to High
               </button>
               <button 
-                className="w-full px-4 py-2 text-sm text-left hover:bg-gray-50"
-                onClick={() => {
-                  setSelectedPrice("Price: High to Low");
-                  setActiveButton("Price: High to Low");
-                  handleClick();
-                  setShowPriceDropdown(false);
-                }}
+                className="w-full px-4 py-2 text-sm text-left hover:bg-gray-50 whitespace-nowrap"
+                onClick={() => handleDropdownSelect('price', 'high', 'Price: High to Low')}
               >
                 Price: High to Low
               </button>
@@ -192,4 +191,4 @@ export default function SortButtons() {
       </div>
     </div>
   );
-} 
+}

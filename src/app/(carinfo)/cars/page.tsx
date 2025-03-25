@@ -2,7 +2,7 @@
 import getCarProviders from "@/libs/getCarProviders"
 import CarCatalog from "@/components/CarCatalog"
 import { Suspense, useEffect, useState } from "react"
-import { LinearProgress } from "@mui/material"
+import { LinearProgress, Snackbar } from "@mui/material"
 import { useSearchParams } from "next/navigation";
 import Filter from "@/components/Filter"
 
@@ -80,6 +80,15 @@ export default function Venue() {
                     )}
                 </Suspense>
             </div>
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={() => setOpenSnackbar(false)}
+            >
+                <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: "100%" }}>
+                {snackbarMessage}
+                </Alert>
+            </Snackbar>
         </main>
     )
 }
