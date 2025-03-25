@@ -50,3 +50,5 @@ next-env.d.ts
 # Temporary files
 *.tmp
 *.swp
+
+.vercel
