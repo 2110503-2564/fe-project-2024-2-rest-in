@@ -16,7 +16,16 @@ const nextConfig = {
                 ]
             }
         ]
-    }
+    },
+    async rewrites() {
+        return [
+          {
+            // สำหรับการทำให้เส้นทาง `/` นำไปที่หน้า Home (แก้ปัญหา 404)
+            source: '/',
+            destination: '/index'
+          }
+        ];
+      }
 };
 
 export default nextConfig;
