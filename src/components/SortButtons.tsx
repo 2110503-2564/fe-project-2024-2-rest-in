@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { KeyboardArrowDown } from "@mui/icons-material";
 
 export default function SortButtons() {
   const [showPriceDropdown, setShowPriceDropdown] = useState(false);
@@ -28,7 +27,6 @@ export default function SortButtons() {
             }}
           >
             {selectedSeat}
-            <KeyboardArrowDown className="w-4 h-4" />
           </button>
           {showSeatDropdown && (
             <div className="absolute top-full left-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10">
@@ -62,7 +60,6 @@ export default function SortButtons() {
             }}
           >
             {selectedPrice}
-            <KeyboardArrowDown className="w-4 h-4" />
           </button>
           {showPriceDropdown && (
             <div className="absolute top-full left-0 mt-1 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-10">

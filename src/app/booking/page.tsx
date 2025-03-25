@@ -37,7 +37,7 @@ export default function Booking() {
 useEffect(() => {
   const fetchCarProviders = async () => {
     try {
-      const providers = await getCarProviders();  // เรียกใช้งาน getCarProviders
+      const providers = await getCarProviders("");  // เรียกใช้งาน getCarProviders
       if (providers && providers.data) {  // ตรวจสอบว่า providers มี field 'data' หรือไม่
         setCarProviders(providers.data);  // เก็บข้อมูล car providers ที่ได้จาก API
       } else {
