@@ -6,10 +6,10 @@ export default function PriceAndSeat({minimum, maximumSeat, maximumPrice, minSea
         <div>
             <div>
           <div className="flex justify-between">
-            <label htmlFor="minSeat" className="text-gray-500">
+            <label htmlFor="minSeat" className="text-gray-500 text-sm font-medium">
               Min Seats
             </label>
-            <label htmlFor="maxSeat" className="text-gray-500">
+            <label htmlFor="maxSeat" className="text-gray-500 text-sm font-medium">
               Max Seats
             </label>
           </div>
@@ -56,11 +56,11 @@ export default function PriceAndSeat({minimum, maximumSeat, maximumPrice, minSea
         </div>
 
         <div>
-          <div className="flex justify-between">
-            <label htmlFor="minPrice" className="text-gray-500">
+          <div className="flex justify-between mt-2">
+            <label htmlFor="minPrice" className="text-gray-500 text-sm font-medium">
               Min Price
             </label>
-            <label htmlFor="maxPrice" className="text-gray-500">
+            <label htmlFor="maxPrice" className="text-gray-500 text-sm font-medium">
               Max Price
             </label>
           </div>

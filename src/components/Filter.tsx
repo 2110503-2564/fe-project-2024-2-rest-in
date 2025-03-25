@@ -137,9 +137,9 @@ export default function Filter() {
 
   return (
     <div className="h-full w-full px-5 py-5">
-      <h2 className="text-xl font-semibold mb-6">Filters</h2>
+      <h2 className="text-xl font-semibold mt-5 mb-2">Filters</h2>
       
-      <div className="space-y-6">
+      <div className="space-y-3">
         <div className="relative">
           <input
             type="text"
