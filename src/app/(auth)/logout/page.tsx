@@ -16,7 +16,7 @@ export default function SignOutPage() {
   }, [router]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover bg-center px-10" style={{ backgroundImage: "url('/img/carbg.jpg')" }}>
+    <div className="min-h-[90vh] flex items-center justify-center bg-cover bg-center px-10" style={{ backgroundImage: "url('/img/carbg.jpg')" }}>
       <div className="w-full max-w-lg p-8 bg-white bg-opacity-80 rounded-lg shadow-lg">
         <div className="text-center">
           <h2 className="mt-6 text-3xl font-extrabold text-[#5C4590]">

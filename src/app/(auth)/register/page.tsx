@@ -51,7 +51,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-start bg-cover bg-center px-10" style={{ backgroundImage: "url('/img/carbg.jpg')" }}>
+    <div className="min-h-[90vh] flex items-center justify-start bg-cover bg-center px-10" style={{ backgroundImage: "url('/img/carbg.jpg')" }}>
       <div className="w-full max-w-lg p-8">
         <h1 className="text-4xl font-bold mb-4 text-[#5C4590]">Create new account</h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
