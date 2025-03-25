@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Slider } from "@mui/material";
+// import { Search } from "@mui/icons-material";
 
 const Filter = () => {
   const minPrice = 0;
@@ -11,12 +12,24 @@ const Filter = () => {
   const step = 1;
   const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
   const [seatRange, setSeatRange] = useState([minSeat, maxSeat]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="h-full">
+    <div className="h-full w-full px-5">
       <h2 className="text-xl font-semibold mb-6">Filters</h2>
       
       <div className="space-y-6">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search cars..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+          />
+          {/* <Search className="absolute left-3 top-2.5 text-gray-400" /> */}
+        </div>
+
         <div>
           <h3 className="text-sm font-medium mb-2">Price Range</h3>
           <div className="px-2">
@@ -86,16 +99,6 @@ const Filter = () => {
             <option value="Chiang Mai">Chiang Mai</option>
             <option value="Phuket">Phuket</option>
             <option value="Pattaya">Pattaya</option>
-          </select>
-        </div>
-
-        <div>
-          <h3 className="text-sm font-medium mb-2">Sort By</h3>
-          <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
-            <option value="relevance">Relevance</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="popular">Most Popular</option>
           </select>
         </div>
       </div>

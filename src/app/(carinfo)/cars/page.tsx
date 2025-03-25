@@ -59,11 +59,10 @@ export default async function Venue() {
     
     return (
         <main className="flex flex-row">
-            <div className="w-1/4 p-4 border-r h-screen block fixed top-0">
+            <div className="w-1/5 p-4 border-r h-screen block fixed top-[10%]">
                 <Filter></Filter>
             </div>
-            <div className="w-3/4 p-5 ml-auto" style={{ marginLeft: '25%' }}>
-                <h1 className="text-xl font-medium mb-4">Select Your Place</h1>
+            <div className="w-4/5 p-2 ml-auto">
                 <Suspense fallback={<p>Loading...<LinearProgress/></p>}>
                     <CarCatalog CarProviderJson={carProviders}></CarCatalog>
                 </Suspense>

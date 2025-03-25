@@ -1,15 +1,16 @@
-import { useState } from 'react';
-import { AiOutlineHeart } from 'react-icons/ai';
 import Image from 'next/image';
 import InteractiveCard from './InteractiveCard';
-import styles from './card.module.css';
+import {useState} from 'react';
+import {AiOutlineHeart} from 'react-icons/ai';
 
-export default function Card({ carName, imgSrc, price, seat }: { carName: string, imgSrc: string, price: number, seat: number }) {
+export default function Card({carName, imgSrc, onRating, price, seat}:{carName:string, imgSrc:string, onRating?:Function, price:number, seat:number}) {
+    const  [value, setValue] = useState<number | null>(0);
+
     const [isLiked, setIsLiked] = useState(false);
 
-    const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
+    const handleLike = (e: React.MouseEvent<HTMLDivElement>) => { // Updated type here
         setIsLiked(!isLiked);
+        e.stopPropagation();
     };
 
     return (
@@ -26,12 +27,12 @@ export default function Card({ carName, imgSrc, price, seat }: { carName: string
                 <div>{carName}</div>
                 <p className="text-sm text-gray-400">{seat} seats</p>
                 <div className="flex justify-between w-full items-center">
-                    <p className="text-white font-medium bg-[#FE7F3F]">${price}</p>
-                    <button onClick={handleLike} className="text-2xl">
-                        <AiOutlineHeart
-                            className={`${isLiked ? "text-red-500" : "text-gray-500"}`}
-                        />
-                    </button>
+                <p className="text-base font-medium">${price}</p>
+                <div onClick={(e) => { handleLike(e); e.stopPropagation(); }} className="text-2xl">
+                    <AiOutlineHeart
+                    className={`${isLiked ? "text-red-500" : "text-gray-500"}`}
+                    />
+                </div>
                 </div>
             </div>
         </InteractiveCard>
