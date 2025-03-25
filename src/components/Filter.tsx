@@ -1,18 +1,23 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Slider } from "@mui/material";
 // import { Search } from "@mui/icons-material";
 
 const Filter = () => {
+  const router = useRouter();
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {    // router.push(`/cars?minprice=${minPrice}&maxprice=${maxPrice}&minseat=${minSeat}&maxseat=${maxSeat}&relevance=&province=&toplike=&price=&seat=&page=&limit=`);
+    router.push(`/cars?minprice=${priceRange[0]}&maxprice=${priceRange[1]}&minseat=${seatRange[0]}&maxseat=${seatRange[1]}&relevance=${searchQuery}&province=${province}`);
+
+  };
   const minPrice = 0;
-  const maxPrice = 1000000;
+  const maxPrice = 50000;
   const minSeat = 1;
-  const maxSeat = 10;
-  const step = 1;
+  const maxSeat = 300;
   const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
   const [seatRange, setSeatRange] = useState([minSeat, maxSeat]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [province, setProvince] = useState("");
 
   return (
     <div className="h-full w-full px-5">
@@ -25,7 +30,7 @@ const Filter = () => {
             placeholder="Search cars..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="w-full pl-4 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
           {/* <Search className="absolute left-3 top-2.5 text-gray-400" /> */}
         </div>
@@ -39,7 +44,7 @@ const Filter = () => {
               valueLabelDisplay="auto"
               min={minPrice}
               max={maxPrice}
-              step={step}
+              step={1}
               sx={{
                 color: "orange",
                 "& .MuiSlider-thumb": {
@@ -70,7 +75,6 @@ const Filter = () => {
               min={minSeat}
               max={maxSeat}
               step={1}
-              marks
               sx={{
                 color: "orange",
                 "& .MuiSlider-thumb": {
@@ -93,7 +97,9 @@ const Filter = () => {
 
         <div>
           <h3 className="text-sm font-medium mb-2">Province</h3>
-          <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+          <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+            onChange={(e) => setProvince(e.target.value)}
+          >
             <option value="">All Provinces</option>
             <option value="Bangkok">Bangkok</option>
             <option value="Chiang Mai">Chiang Mai</option>
@@ -102,6 +108,12 @@ const Filter = () => {
           </select>
         </div>
       </div>
+
+        <button className="bg-[#FE7F3F] text-white border-none 
+        font-bold py-3 px-5 rounded-md shadow-lg transition-transform duration-300 hover:scale-105 w-full text-center mt-5"
+        onClick={handleClick}>
+          Search
+        </button>
     </div>
   );
 };

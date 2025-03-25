@@ -14,7 +14,7 @@ export default async function CarCatalog({CarProviderJson}: {CarProviderJson: Pr
     </div>
       <div className="m-4 flex flex-row content-around justify-around flex-wrap gap-6">
         {CarProviderJsonReady.data.map((data:CarProvider) => (
-          <Link href={`/cars/${data.id}`} className="w-[250px] flex">
+          <Link href={`/cars/${data.id}`} className="w-[250px] flex" prefetch={true}>
             <Card
               key={data.name}
               carName={data.name}

@@ -4,11 +4,10 @@ import {useState} from 'react';
 import {AiOutlineHeart} from 'react-icons/ai';
 
 export default function Card({carName, imgSrc, onRating, price, seat}:{carName:string, imgSrc:string, onRating?:Function, price:number, seat:number}) {
-    const  [value, setValue] = useState<number | null>(0);
 
     const [isLiked, setIsLiked] = useState(false);
 
-    const handleLike = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleLike = (e: React.MouseEvent<HTMLDivElement>) => {
         setIsLiked(!isLiked);
         e.preventDefault();
     };
@@ -28,7 +27,7 @@ export default function Card({carName, imgSrc, onRating, price, seat}:{carName:s
                 <p className="text-sm text-gray-400">{seat} seats</p>
                 <div className="flex justify-between w-full items-center">
                 <p className="text-base font-medium">${price}</p>
-                <div onClick={(e) => { e.stopPropagation(); handleLike(e); }} className="text-2xl">
+                <div onClick={(e: React.MouseEvent<HTMLDivElement>) => { e.stopPropagation(); handleLike(e); }} className="text-2xl">
                     <AiOutlineHeart
                     className={`${isLiked ? "text-red-500" : "text-gray-500"}`}
                     />
