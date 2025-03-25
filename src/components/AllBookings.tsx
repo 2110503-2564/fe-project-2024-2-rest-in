@@ -111,6 +111,7 @@ const AllBookings = () => {
                   <div className="mx-5">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">{booking.carProvider.name}</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <p className="text-gray-700"><strong>Book by:</strong> {booking.user}</p>
                       <p className="text-gray-700"><strong>Start Date:</strong> {new Date(booking.startDate).toLocaleDateString()}</p>
                       <p className="text-gray-700"><strong>End Date:</strong> {new Date(booking.endDate).toLocaleDateString()}</p>
                       <p className="text-gray-700"><strong>Car Provider:</strong> {booking.carProvider.name}</p>
