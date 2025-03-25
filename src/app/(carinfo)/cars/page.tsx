@@ -80,15 +80,6 @@ export default function Venue() {
                     )}
                 </Suspense>
             </div>
-            <Snackbar
-                open={openSnackbar}
-                autoHideDuration={6000}
-                onClose={() => setOpenSnackbar(false)}
-            >
-                <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: "100%" }}>
-                {snackbarMessage}
-                </Alert>
-            </Snackbar>
         </main>
     )
 }

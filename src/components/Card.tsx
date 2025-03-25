@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import {AiOutlineHeart} from 'react-icons/ai';
 import { useSession } from 'next-auth/react';
 import likeCar from '@/libs/likeCar';
+import { Snackbar, Alert } from '@mui/material';
 
 export default function Card({carId, carName, imgSrc, price, seat, like, province}
                             :{carId:string, carName:string, imgSrc:string, price:number, seat:number, like:number, province:string}) {
@@ -14,21 +15,46 @@ export default function Card({carId, carName, imgSrc, price, seat, like, provinc
     const [isLiked, setIsLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(like);
 
-    const handleLike = async(e: React.MouseEvent<HTMLDivElement>) => {
+    // Snackbar state
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('info');
+
+    const handleLike = async (e: React.MouseEvent<HTMLDivElement>) => {
         e.preventDefault();
-        if(!token || isLiked){
-            return;
+    
+        if (!token) {
+          setSnackbarMessage('Please log in to like the car');
+          setSnackbarSeverity('warning');
+          setOpenSnackbar(true);
+          return;
         }
+    
+        if (isLiked) {
+          // Show a Snackbar if the user tries to like again
+          setSnackbarMessage('You already liked this car');
+          setSnackbarSeverity('info');
+          setOpenSnackbar(true);
+          return;
+        }
+    
         try {
-            await likeCar(carId, token);
-            setIsLiked(true);
-            setLikeCount(prev => prev + 1);
+          await likeCar(carId, token);
+          setIsLiked(true);
+          setLikeCount(prev => prev + 1);
+          setSnackbarMessage('Car liked successfully');
+          setSnackbarSeverity('success');
+          setOpenSnackbar(true);
         } catch (error) {
-            console.error("Error liking car:", error);
+          console.error("Error liking car:", error);
+          setSnackbarMessage('Failed to like the car');
+          setSnackbarSeverity('error');
+          setOpenSnackbar(true);
         }
-    };
+      };
 
     return (
+        <>
         <InteractiveCard>
             <div className='w-full h-[70%] relative rounded-t-lg'>
                 <Image 
@@ -56,5 +82,17 @@ export default function Card({carId, carName, imgSrc, price, seat, like, provinc
                 </div>
             </div>
         </InteractiveCard>
+
+        {/* Snackbar for friendly alert messages */}
+      <Snackbar
+      open={openSnackbar}
+      autoHideDuration={6000}
+      onClose={() => setOpenSnackbar(false)}
+    >
+      <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: "100%" }}>
+        {snackbarMessage}
+      </Alert>
+    </Snackbar>
+  </>
     );
 }
