@@ -136,7 +136,7 @@ export default function Filter() {
   const [province, setProvince] = useState(iniprovince ? iniprovince : "");
 
   return (
-    <div className="h-full w-full px-5">
+    <div className="h-full w-full px-5 py-5">
       <h2 className="text-xl font-semibold mb-6">Filters</h2>
       
       <div className="space-y-6">
